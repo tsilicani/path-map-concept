@@ -107,12 +107,12 @@ export default function Home() {
 
   return (
     <div className="">
-      <Card className="absolute bottom-4 left-6 w-full max-w-lg">
+      <Card className="absolute bottom-4 left-6 w-full max-w-lg opacity-80">
         <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
           <div className="grid flex-1 gap-1 text-center sm:text-left">
-            <CardTitle>Elevation Chart - Interactive</CardTitle>
+            <CardTitle>Elevation Chart</CardTitle>
             <CardDescription>
-              Showing elevation data for the route
+             Route elevation and distance
             </CardDescription>
           </div>
         </CardHeader>
@@ -139,10 +139,10 @@ export default function Home() {
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="distance"
-                tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                minTickGap={32}
+                tickFormatter={(value) => `${(value / 1000).toFixed(1)}`}
+                tickCount={9}
               />
               <ChartTooltip
                 cursor={false}
@@ -158,7 +158,7 @@ export default function Home() {
               <Area
                 dataKey="elevation"
                 type="natural"
-                fill="url(#fillElevation)"
+                fill="red"
                 stroke="var(--color-elevation)"
               />
               <ChartLegend content={<ChartLegendContent />} />
