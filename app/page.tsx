@@ -6,8 +6,6 @@ import { useRef } from "react";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -18,7 +16,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+
+const PRIMARY="red"
 
 const calculateDistance = (coord1: number[], coord2: number[]) => {
   const [x1, y1, z1] = coord1;
@@ -30,7 +30,7 @@ const elevationData = route.features[0].geometry.coordinates.map((coord, index, 
   const cumulativeDistance = index === 0 ? 0 : arr.slice(0, index).reduce((acc, curr, i) => acc + calculateDistance(arr[i], arr[i + 1]), 0);
   return {
     elevation: coord[2],
-    distance: cumulativeDistance,
+    distance: cumulativeDistance/1000,
   };
 });
 
@@ -105,8 +105,9 @@ export default function Home() {
     }
   }, []);
 
+
   return (
-    <div className="">
+    <div className="bg-gray-900 text-white theme">
       <Card className="absolute bottom-4 left-6 w-full max-w-lg opacity-80">
         <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
           <div className="grid flex-1 gap-1 text-center sm:text-left">
@@ -116,52 +117,53 @@ export default function Home() {
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+        <CardContent>
           <ChartContainer
             config={chartConfig}
             className="aspect-auto h-[250px] w-full"
           >
-            <AreaChart data={elevationData}>
+            <AreaChart
+              data={elevationData}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              className="text-white"
+            >
               <defs>
                 <linearGradient id="fillElevation" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--color-elevation)"
-                    stopOpacity={0.8}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--color-elevation)"
-                    stopOpacity={0.1}
-                  />
+                  <stop offset="5%" stopColor={PRIMARY} stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor={PRIMARY} stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="black" strokeOpacity={0.2} />
               <XAxis
                 dataKey="distance"
+                tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => `${(value / 1000).toFixed(1)}`}
-                tickCount={9}
+                tickFormatter={(value) => `${(value).toFixed(1)}`}
+                type="number"
+                domain={[0, 'auto']}
+                className="text-white"
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => `${value.toFixed(0)}`}
+                type="number"
+                domain={['auto', 'auto']}
+                className="text-white"
               />
               <ChartTooltip
                 cursor={false}
-                content={
-                  <ChartTooltipContent
-                    labelFormatter={(value) => {
-                      return value;
-                    }}
-                    indicator="dot"
-                  />
-                }
+                content={<ChartTooltipContent />}
+                wrapperStyle={{ backgroundColor: '#333', borderColor: '#555' }}
               />
               <Area
                 dataKey="elevation"
-                type="natural"
-                fill="red"
-                stroke="var(--color-elevation)"
+                type="monotone"
+                fill="url(#fillElevation)"
+                stroke={PRIMARY}
               />
-              <ChartLegend content={<ChartLegendContent />} />
             </AreaChart>
           </ChartContainer>
         </CardContent>
