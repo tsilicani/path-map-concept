@@ -20,9 +20,19 @@ import {
 } from "@/components/ui/card";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
-const elevationData = route.features[0].geometry.coordinates.map((coord) => ({
-  elevation: coord[2],
-}));
+const calculateDistance = (coord1: number[], coord2: number[]) => {
+  const [x1, y1, z1] = coord1;
+  const [x2, y2, z2] = coord2;
+  return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
+};
+
+const elevationData = route.features[0].geometry.coordinates.map((coord, index, arr) => {
+  const cumulativeDistance = index === 0 ? 0 : arr.slice(0, index).reduce((acc, curr, i) => acc + calculateDistance(arr[i], arr[i + 1]), 0);
+  return {
+    elevation: coord[2],
+    distance: cumulativeDistance,
+  };
+});
 
 const chartConfig = {
   visitors: {
@@ -128,7 +138,7 @@ export default function Home() {
               </defs>
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="elevation"
+                dataKey="distance"
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
