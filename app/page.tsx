@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const PRIMARY="red"
 
@@ -49,15 +50,16 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function Home() {
-  const mapContainer = useRef<HTMLDivElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     mapboxgl.accessToken =
       "pk.eyJ1IjoidDBiZXMiLCJhIjoiY2tvcGtlYnZqMGx6aTJ4bDRxZmpsY202aiJ9.VDC7seXYYo8lGNtqJBjOAQ";
 
-    if (mapContainer.current) {
-      const map = new mapboxgl.Map({
-        container: mapContainer.current,
+    if (mapContainerRef.current) {
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
         style: "mapbox://styles/t0bes/cm52nb8i500cs01s9avx676gs",
         projection: "globe",
         zoom: 11.59,
@@ -66,13 +68,16 @@ export default function Home() {
         bearing: -43.99,
       });
 
-      map.on("load", () => {
-        map.addSource("route", {
+      mapRef.current.on("load", () => {
+        if(!mapRef.current){
+          return
+        }
+        mapRef.current.addSource("route", {
           type: "geojson",
           data: route as GeoJSON.FeatureCollection<GeoJSON.LineString>,
         });
         // Add layer for the track
-        map.addLayer({
+        mapRef.current.addLayer({
           id: "route",
           type: "line",
           source: "route",
@@ -89,19 +94,22 @@ export default function Home() {
       });
 
       // // Add zoom controls
-      map.addControl(new mapboxgl.NavigationControl(), "top-right");
+      mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-      map.on("moveend", () => {
+      mapRef.current.on("moveend", () => {
+        if(!mapRef.current){
+          return
+        }
         console.log(
           JSON.stringify({
-            zoom: map.getZoom(),
-            center: map.getCenter(),
-            pitch: map.getPitch(),
-            bearing: map.getBearing(),
+            zoom: mapRef.current.getZoom(),
+            center: mapRef.current.getCenter(),
+            pitch: mapRef.current.getPitch(),
+            bearing: mapRef.current.getBearing(),
           })
         );
       });
-      return () => map.remove();
+      return () => mapRef.current?.remove();
     }
   }, []);
 
@@ -169,12 +177,8 @@ export default function Home() {
         </CardContent>
       </Card>
       <div
-        ref={mapContainer}
-        style={{
-          width: "100vw",
-          height: "100vh",
-          zIndex: -1,
-        }}
+        ref={mapContainerRef}
+        id="map-container"
       />
     </div>
   );
