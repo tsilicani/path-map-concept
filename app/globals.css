@@ -77,6 +77,10 @@ body {
   z-index: -1;
 }
 
+.mapboxgl-ctrl-bottom-left {
+  top:8px !important;
+}
+
 @layer base {
   * {
     @apply border-border;

@@ -66,6 +66,7 @@ export default function Home() {
         center: [7.246491655545952, 45.38901721487122],
         pitch: 63.36,
         bearing: -43.99,
+        attributionControl: false,
       });
 
       mapRef.current.on("load", () => {
@@ -116,7 +117,14 @@ export default function Home() {
 
   return (
     <div className="bg-gray-900 text-white theme">
-      <Card className="absolute bottom-4 left-6 w-full max-w-lg opacity-80">
+      <Card className="absolute top-6 left-6 w-auto opacity-80 overflow-hidden">
+        <CardHeader className="py-3 px-4">
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+            Nivolet Race
+          </CardTitle>
+        </CardHeader>
+      </Card>
+      <Card className="absolute bottom-4 left-6 w-full max-w-xl opacity-80">
         <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
           <div className="grid flex-1 gap-1 text-center sm:text-left">
             <CardTitle>Elevation Chart</CardTitle>
