@@ -3,7 +3,7 @@ import mapboxgl, { LngLatLike } from "mapbox-gl";
 import { useEffect } from "react";
 import route from "@/app/data/route.json"; // Geojson file
 import mapboxImg from "@/app/images/mapbox-logo.svg";
-import markerImg from "@/app/images/marker.svg";
+import flagImage from "@/app/images/fixed-vertical-checkered-flag-waving-vigorously-br.png";
 import { useRef } from "react";
 import {
   ChartConfig,
@@ -96,21 +96,36 @@ export default function Home() {
           },
         });
 
-        // Add marker at the 100th point
-        const coordinates = route.features[0].geometry.coordinates[100];
-        if (coordinates) {
-          const el = document.createElement('div');
-          el.className = 'custom-marker';
-          const img = document.createElement('img');
-          img.src = markerImg.src;
-          img.alt = 'marker';
-          el.appendChild(img);
-          
-          new mapboxgl.Marker({
-            element: el,
-            anchor: 'center'
+        // Add popup at the 150th point showing altitude
+        const popupCoordinates = route.features[0].geometry.coordinates[150];
+        if (popupCoordinates) {
+          const altitude = Math.round(popupCoordinates[2]);
+          new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            offset: [0, -15]
           })
-            .setLngLat(coordinates as LngLatLike)
+            .setLngLat(popupCoordinates as LngLatLike)
+            .setHTML(`<div class="text-sm font-semibold ">Altitude: ${altitude}m</div>`)
+            .addTo(mapRef.current);
+        }
+
+        // Add flag at the end of the path
+        const lastCoordinate = route.features[0].geometry.coordinates[route.features[0].geometry.coordinates.length - 1];
+        if (lastCoordinate) {
+          const flagEl = document.createElement('div');
+          flagEl.className = 'flag-marker';
+          const flagImg = document.createElement('img');
+          flagImg.src = flagImage.src;
+          flagImg.alt = 'finish flag';
+          flagEl.appendChild(flagImg);
+
+          new mapboxgl.Marker({
+            element: flagEl,
+            anchor: 'bottom',
+            offset: [40, -10]
+          })
+            .setLngLat(lastCoordinate as LngLatLike)
             .addTo(mapRef.current);
         }
       });
