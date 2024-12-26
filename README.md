@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nivolet Hill: A Virtual Alpine Experience 🏔️
 
-## Getting Started
+Experience the majestic beauty of the Italian Alps through an interactive 3D visualization of the Colle del Nivolet climb. This proof-of-concept showcases one of the most spectacular mountain passes in the Graian Alps, transforming it into an immersive virtual race course.
 
-First, run the development server:
+## 🌟 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Interactive 3D Terrain**: Explore the stunning alpine landscape with a fully rotatable and zoomable 3D map
+- **Dynamic Route Visualization**: Follow the challenging ascent with a clearly marked path
+- **Real-time Elevation Data**: Track the altitude changes through a responsive elevation chart
+- **Race Progress Indicators**: Visual markers showing key points along the route
+- **Atmospheric Effects**: Beautiful terrain rendering with natural shadows and lighting
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Purpose
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project aims to:
+- Showcase the natural beauty of the Colle del Nivolet
+- Provide cyclists and mountain enthusiasts with a virtual preview of the climb
+- Demonstrate the potential of modern web technologies in creating immersive outdoor experiences
+- Combine technical mapping capabilities with engaging user interaction
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔗 Live Demo
 
-## Learn More
+Experience the climb yourself at: [https://path-map-concept.vercel.app](https://path-map-concept.vercel.app)
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Technology
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Built with:
+- Mapbox GL JS for 3D terrain rendering
+- Next.js for the web application framework
+- Recharts for elevation data visualization
+- Custom animations and interactive elements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📍 About Colle del Nivolet
 
-## Deploy on Vercel
+The Colle del Nivolet is a high mountain pass in the Graian Alps, reaching an elevation of 2,612 meters (8,570 ft). Located in the heart of the Gran Paradiso National Park, it offers breathtaking views of the surrounding peaks and alpine lakes, making it a premier destination for cycling enthusiasts and nature lovers alike.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*This is a proof of concept project demonstrating the possibilities of interactive 3D mapping for showcasing mountain routes and natural landmarks.*
