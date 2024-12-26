@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ReferenceLine, ReferenceDot } from "recharts";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Image from "next/image";
 
@@ -202,9 +202,7 @@ export default function Home() {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => `${value.toFixed(0)}`}
-                type="number"
-                domain={['auto', 'auto']}
+                tickFormatter={(value) => `${(value)}m`}
                 className="text-white"
               />
               <ChartTooltip
@@ -213,10 +211,25 @@ export default function Home() {
                 wrapperStyle={{ backgroundColor: '#333', borderColor: '#555' }}
               />
               <Area
-                dataKey="elevation"
                 type="monotone"
-                fill="url(#fillElevation)"
+                dataKey="elevation"
                 stroke={PRIMARY}
+                fillOpacity={1}
+                fill="url(#fillElevation)"
+              />
+              <ReferenceLine
+                x={elevationData[150].distance}
+                stroke={PRIMARY}
+                strokeWidth={2}
+                strokeDasharray="3 3"
+              />
+              <ReferenceDot
+                x={elevationData[150].distance}
+                y={elevationData[150].elevation}
+                r={6}
+                fill={PRIMARY}
+                stroke="white"
+                strokeWidth={2}
               />
             </AreaChart>
           </ChartContainer>
