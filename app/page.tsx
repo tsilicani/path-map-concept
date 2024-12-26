@@ -80,6 +80,21 @@ export default function Home() {
           type: "geojson",
           data: route as GeoJSON.FeatureCollection<GeoJSON.LineString>,
         });
+
+        // Start continuous rotation
+        let currentBearing = mapRef.current.getBearing();
+        function rotate() {
+          if (!mapRef.current) return;
+          currentBearing += 0.2; // Adjust speed by changing this value
+          mapRef.current.easeTo({
+            bearing: currentBearing,
+            duration: 50,
+            easing: (t) => t
+          });
+          requestAnimationFrame(rotate);
+        }
+        rotate();
+
         // Add layer for the track
         mapRef.current.addLayer({
           id: "route",
