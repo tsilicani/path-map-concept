@@ -107,8 +107,8 @@ body {
     height: 100%;
   }
   .flag-marker {
-    width: 144px;
-    height: 144px;
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
