@@ -2,6 +2,7 @@
 import mapboxgl from "mapbox-gl";
 import { useEffect } from "react";
 import route from "@/app/data/route.json"; // Geojson file
+import mapboxImg from "@/app/images/mapbox-logo.svg";
 import { useRef } from "react";
 import {
   ChartConfig,
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Image from "next/image";
 
 const PRIMARY="red"
 
@@ -66,7 +68,6 @@ export default function Home() {
         center: [7.246491655545952, 45.38901721487122],
         pitch: 63.36,
         bearing: -43.99,
-        attributionControl: false,
       });
 
       mapRef.current.on("load", () => {
@@ -118,10 +119,12 @@ export default function Home() {
   return (
     <div className="bg-gray-900 text-white theme">
       <Card className="absolute top-6 left-6 w-auto opacity-80 overflow-hidden">
-        <CardHeader className="py-3 px-4">
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-            Nivolet Race
+        <CardHeader className="py-3 px-4 flex flex-row gap-2 justify-between items-center sm:flex-row">
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+            Nivolet Hill
           </CardTitle>
+          <div className="text-xs font-semibold text-muted-foreground">using</div>
+          <Image src={mapboxImg} alt="mapbox logo"/>
         </CardHeader>
       </Card>
       <Card className="absolute bottom-4 left-6 w-full max-w-xl opacity-80">

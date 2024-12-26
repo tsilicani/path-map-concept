@@ -78,7 +78,7 @@ body {
 }
 
 .mapboxgl-ctrl-bottom-left {
-  top:8px !important;
+  display: none !important;
 }
 
 @layer base {
