@@ -114,16 +114,19 @@ export default function Home() {
         const lastCoordinate = route.features[0].geometry.coordinates[route.features[0].geometry.coordinates.length - 1];
         if (lastCoordinate) {
           const flagEl = document.createElement('div');
-          flagEl.className = 'flag-marker';
+          flagEl.className = 'flag-wrapper';
+          const flagInner = document.createElement('div');
+          flagInner.className = 'flag-marker';
           const flagImg = document.createElement('img');
           flagImg.src = flagImage.src;
           flagImg.alt = 'finish flag';
-          flagEl.appendChild(flagImg);
+          flagInner.appendChild(flagImg);
+          flagEl.appendChild(flagInner);
 
           new mapboxgl.Marker({
             element: flagEl,
             anchor: 'bottom',
-            offset: [40, -10]
+            offset: [20, 10]
           })
             .setLngLat(lastCoordinate as LngLatLike)
             .addTo(mapRef.current);
