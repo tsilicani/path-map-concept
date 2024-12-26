@@ -1,8 +1,9 @@
 "use client";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { LngLatLike } from "mapbox-gl";
 import { useEffect } from "react";
 import route from "@/app/data/route.json"; // Geojson file
 import mapboxImg from "@/app/images/mapbox-logo.svg";
+import markerImg from "@/app/images/marker.svg";
 import { useRef } from "react";
 import {
   ChartConfig,
@@ -22,6 +23,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Image from "next/image";
 
 const PRIMARY="red"
+
 
 const calculateDistance = (coord1: number[], coord2: number[]) => {
   const [x1, y1, z1] = coord1;
@@ -88,11 +90,29 @@ export default function Home() {
             "line-cap": "round",
           },
           paint: {
-            "line-color": "red",
+            "line-color": PRIMARY,
             "line-width": 4,
             "line-opacity": 0.8,
           },
         });
+
+        // Add marker at the 100th point
+        const coordinates = route.features[0].geometry.coordinates[100];
+        if (coordinates) {
+          const el = document.createElement('div');
+          el.className = 'custom-marker';
+          const img = document.createElement('img');
+          img.src = markerImg.src;
+          img.alt = 'marker';
+          el.appendChild(img);
+          
+          new mapboxgl.Marker({
+            element: el,
+            anchor: 'center'
+          })
+            .setLngLat(coordinates as LngLatLike)
+            .addTo(mapRef.current);
+        }
       });
 
       // // Add zoom controls

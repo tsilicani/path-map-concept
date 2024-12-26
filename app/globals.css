@@ -88,4 +88,22 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .custom-marker {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .custom-marker:hover {
+    transform: scale(1.2);
+  }
+  .custom-marker {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .custom-marker img {
+    width: 100%;
+    height: 100%;
+  }
 }
